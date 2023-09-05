@@ -75,19 +75,28 @@ func listFiles(fileMap map[string][]File) {
 	}
 }
 
-func moveFiles(fileMap map[string][]File) {
+func confirmMove() string {
+	//TODO this is not testable and needs to be moved to an earlyier stage
 	scanner := bufio.NewScanner(os.Stdin)
 	fmt.Print("Are you sure you want to move duplicated files? (yes/no): ")
 	scanner.Scan()
 	confirmation := strings.ToLower(scanner.Text())
 	if confirmation != "yes" {
 		fmt.Println("Move operation canceled.")
+		return ""
+	}
+	fmt.Print("Enter the destination path to move duplicated files: ")
+	//TODO this is not testable and needs to be moved to an earlyier stage
+
+	scanner.Scan()
+	return scanner.Text()
+}
+
+func moveFiles(fileMap map[string][]File, destination string) {
+
+	if destination == "" {
 		return
 	}
-
-	fmt.Print("Enter the destination path to move duplicated files: ")
-	scanner.Scan()
-	destination := scanner.Text()
 
 	for _, files := range fileMap {
 		if len(files) > 1 {
@@ -153,15 +162,19 @@ func copyFile(src, dest string) error {
 	return nil
 }
 
-func deleteFiles(fileMap map[string][]File) {
+func confirmDelete() bool {
 	scanner := bufio.NewScanner(os.Stdin)
 	fmt.Print("Are you sure you want to delete duplicated files? (yes/no): ")
 	scanner.Scan()
 	confirmation := strings.ToLower(scanner.Text())
 	if confirmation != "yes" {
 		fmt.Println("Deletion canceled.")
-		return
+		return false
 	}
+	return true
+}
+
+func deleteFiles(fileMap map[string][]File, isDelete bool) {
 
 	for _, files := range fileMap {
 		if len(files) > 1 {
@@ -252,9 +265,9 @@ func main() {
 			case "l":
 				listFiles(fileMap)
 			case "m":
-				moveFiles(fileMap)
+				moveFiles(fileMap, confirmMove())
 			case "d":
-				deleteFiles(fileMap)
+				deleteFiles(fileMap, confirmDelete())
 			case "i":
 				fmt.Println("Duplicates will be ignored.")
 				os.Exit(0)
