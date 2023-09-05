@@ -17,11 +17,38 @@ This command-line tool is designed to help you find and manage duplicate files i
 
 ### Usage
 
-1. Open your terminal and navigate to the executable.
+1. Open your terminal/command prompt and navigate to the source folder where the project is located.
 
-2. Run the program:
+#### For Windows:
 
-3. Follow the on-screen prompts to manage the duplicate files. You can list, move, delete, or ignore duplicates based on your preferences.
+2. Build the executable using Go:
+
+   ```
+   go build
+   ```
+
+3. After the build is successful, you can run the program by executing the generated executable:
+
+   ```
+   duplicate_finder.exe
+   ```
+
+#### For Linux and macOS:
+
+2. Build the executable using Go:
+
+   ```
+   go build
+   ```
+
+3. After the build is successful, you can run the program by executing the generated executable:
+
+   ```
+   ./duplicate_finder
+   ```
+
+4. Follow the on-screen prompts to manage the duplicate files. You can list, move, delete, or ignore duplicates based on your preferences.
+
 
 ## License
 
@@ -31,3 +58,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - This tool is built with Go and utilizes concurrent processing for efficient file scanning.
 - Special thanks to the Go community for their valuable contributions to open-source software.
+
